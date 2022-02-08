@@ -13,7 +13,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRigidBody;
     private GameObject focalPoint;
 
-    private bool hasPowerUp = false;
+    public bool hasPowerUp = false;
+    private float powerUpForce = 80f;
+    private int powerUpTime = 6;
+
+    public GameObject[] powerUpIndicators;
     void Start()
     {
         playerRigidBody = GetComponent<Rigidbody>();
@@ -34,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
         transform.Rotate(rotationspeed * Vector3.right * Time.deltaTime * VerticalInput);
         transform.Translate(speed * Vector3.forward * Time.deltaTime * VerticalInput);*/
+
     }
 
     private void OnTriggerEnter(Collider othercollider)
@@ -42,7 +47,31 @@ public class PlayerController : MonoBehaviour
         {
             hasPowerUp = true;
             Destroy(othercollider.gameObject);
+            StartCoroutine(powerUpCountdown());
         }
+    }
+    private void OnCollisionEnter(Collision othercollider)
+    {
+        if(othercollider.gameObject.CompareTag("enemy") && hasPowerUp == true)
+        {
+            Rigidbody enemyRigidbody = othercollider.gameObject.GetComponent<Rigidbody>();
+            Vector3 direction = (othercollider.gameObject.transform.position - transform.position).normalized;
+            enemyRigidbody.AddForce(direction * powerUpForce, ForceMode.Impulse);
+            
+        }
+    }
+    private IEnumerator powerUpCountdown()
+    {
+        for (int i = 0; i <powerUpIndicators.Length; i ++)
+        {
+            powerUpIndicators[i].SetActive(true);
+            yield return new WaitForSeconds(2);
+            powerUpIndicators[i].SetActive(false);
+        }
+        yield return new WaitForSeconds(powerUpTime);
+        Debug.Log("No te queda poder");
+        hasPowerUp = false;
+        
     }
 
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cuentaRegresiva : MonoBehaviour
+public class bucles: MonoBehaviour
 {
     //FOR
     public GameObject[] enemyPrefabs;

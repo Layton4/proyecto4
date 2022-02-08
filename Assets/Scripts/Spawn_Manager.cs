@@ -13,11 +13,12 @@ public class Spawn_Manager : MonoBehaviour
     void Start()
     {
         InvokeRepeating("SpawnEnemy", 5, 4);
-        //InvokeRepeating("SpawnEnemy", 3, 2);
+        /*InvokeRepeating("SpawnEnemy", 3, 2);
         for (int i = 0; i<10; i++)
         {
             Instantiate(powerUp, Random_spawn_position(), powerUp.transform.rotation);
         }
+        */
     }
 
 
@@ -37,6 +38,14 @@ public class Spawn_Manager : MonoBehaviour
         int enem = Random.Range(0, enemies_prefabs.Length);
         spawnposition = Random_spawn_position();
         Instantiate(enemies_prefabs[enem], spawnposition, enemies_prefabs[enem].transform.rotation);
+    }
+
+    private void SpawnEnemyWave(int totalenemies)
+    {
+        for(int i = 0; i<totalenemies; i++)
+        {
+            SpawnEnemy();
+        }
     }
 
 
