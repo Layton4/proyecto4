@@ -8,11 +8,16 @@ public class Spawn_Manager : MonoBehaviour
     public Vector3 spawnposition;
     private float lim = 11f;
 
+    public GameObject powerUp;
+
     void Start()
     {
-        InvokeRepeating("SpawnEnemy", 5, 2);
+        InvokeRepeating("SpawnEnemy", 5, 4);
         //InvokeRepeating("SpawnEnemy", 3, 2);
-
+        for (int i = 0; i<10; i++)
+        {
+            Instantiate(powerUp, Random_spawn_position(), powerUp.transform.rotation);
+        }
     }
 
 

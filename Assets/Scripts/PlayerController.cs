@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRigidBody;
     private GameObject focalPoint;
 
-
+    private bool hasPowerUp = false;
     void Start()
     {
         playerRigidBody = GetComponent<Rigidbody>();
@@ -35,4 +35,14 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(rotationspeed * Vector3.right * Time.deltaTime * VerticalInput);
         transform.Translate(speed * Vector3.forward * Time.deltaTime * VerticalInput);*/
     }
+
+    private void OnTriggerEnter(Collider othercollider)
+    {
+        if(othercollider.gameObject.CompareTag("powerUp"))
+        {
+            hasPowerUp = true;
+            Destroy(othercollider.gameObject);
+        }
+    }
+
 }
